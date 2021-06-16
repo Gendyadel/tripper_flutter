@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.tripper_flutter">
    <application
-        android:label="tripper_flutter"
+        android:label="Tripper"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

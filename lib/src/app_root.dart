@@ -1,16 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tripper_flutter/blocs/app_cubit/app_cubit.dart';
+import 'package:tripper_flutter/src/themes.dart';
+import 'package:tripper_flutter/views/on_boarding/on_boarding_screen.dart';
 
 class AppRoot extends StatelessWidget {
   // This widget is the root of your application.
+  final Widget startWidget;
+
+  AppRoot(this.startWidget);
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Tripper',
-      theme: ThemeData(
-
-        primarySwatch: Colors.blue,
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => AppCubit()..getUserData(),
+        ),
+      ],
+      child: BlocConsumer<AppCubit, AppState>(
+        listener: (context, state) {},
+        builder: (context, state) {
+          return MaterialApp(
+            title: 'Tripper',
+            debugShowCheckedModeBanner: false,
+            theme: lightTheme,
+            home: startWidget,
+          );
+        },
       ),
-      home: ,
     );
   }
 }
