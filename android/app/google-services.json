@@ -14,11 +14,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "976142722016-1ncak0lb6tbmfd1m4lg1l3n2jefntc75.apps.googleusercontent.com",
+          "client_id": "976142722016-lb406554tr03lk9lbilrbd9c8dmaae0n.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.tripper_flutter",
-            "certificate_hash": "bb110b02329921676fcb1bca4ce222f00d8fd127"
+            "certificate_hash": "92619d64d80f46491a6e36975a5d0ae80a89bc40"
           }
         },
         {

@@ -110,7 +110,7 @@ class MailLoginScreen extends StatelessWidget {
                       CustomButton(
                         onPressed: () {
                           if (_formKey.currentState.validate()) {
-                            cubit.userLoginWithEmail(
+                            cubit.loginWithEmail(
                               email: emailController.text,
                               password: passwordController.text,
                             );

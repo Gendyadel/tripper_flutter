@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tripper_flutter/blocs/login/login_cubit.dart';
 import 'package:tripper_flutter/components/custom_text_button.dart';
 import 'package:tripper_flutter/components/sign_in_button.dart';
+import 'package:tripper_flutter/layout/user_layout.dart';
 import 'package:tripper_flutter/src/colors.dart';
 import 'package:tripper_flutter/src/constants.dart';
 import 'package:tripper_flutter/views/login/mail_login_screen.dart';
@@ -14,7 +15,11 @@ class LoginScreen extends StatelessWidget {
     return BlocProvider(
       create: (context) => LoginCubit(),
       child: BlocConsumer<LoginCubit, LoginState>(
-        listener: (context, state) {},
+        listener: (context, state) {
+          if (state is GoogleLoginSuccessState) {
+            navigateAndReplace(context, UserLayout());
+          }
+        },
         builder: (context, state) {
           var cubit = LoginCubit.get(context);
           return Scaffold(
@@ -69,7 +74,9 @@ class LoginScreen extends StatelessWidget {
                     SignInButton(
                       text: 'Login with Gmail',
                       assetName: 'assets/images/google-logo.png',
-                      onPressed: () {},
+                      onPressed: () {
+                        cubit.signInWithGoogle();
+                      },
                       backgroundColor: Colors.white,
                       textColor: Colors.black,
                       elevation: 30,
@@ -80,7 +87,9 @@ class LoginScreen extends StatelessWidget {
                     SignInButton(
                       text: 'Login with Facebook',
                       assetName: 'assets/images/facebook-logo.png',
-                      onPressed: () {},
+                      onPressed: () {
+                        cubit.signInWithFacebook();
+                      },
                       backgroundColor: facebookColor2,
                       textColor: Colors.white,
                     ),

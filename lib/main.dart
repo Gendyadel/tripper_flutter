@@ -8,7 +8,6 @@ import 'package:tripper_flutter/src/app_root.dart';
 import 'package:tripper_flutter/src/constants.dart';
 import 'package:tripper_flutter/views/login/login_screen.dart';
 import 'package:tripper_flutter/views/on_boarding/on_boarding_screen.dart';
-import 'package:tripper_flutter/views/register/register_by_mail_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -32,7 +31,7 @@ void main() async {
     widget = OnBoardingScreen();
   }
 
-  widget = LoginScreen();
+  //widget = LoginScreen();
 
   runApp(AppRoot(widget));
 }

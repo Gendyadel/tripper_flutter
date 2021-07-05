@@ -7,6 +7,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
 
 import 'package:tripper_flutter/models/auth/user_model.dart';
+import 'package:tripper_flutter/service/firestore_user.dart';
+import 'package:tripper_flutter/service/storage/cache_helper.dart';
 
 part 'register_state.dart';
 
@@ -20,6 +22,7 @@ class RegisterCubit extends Cubit<RegisterState> {
     @required String password,
     @required String displayName,
     @required String phoneNumber,
+    String picture,
   }) {
     emit(RegisterLoadingState());
     FirebaseAuth.instance
@@ -27,43 +30,26 @@ class RegisterCubit extends Cubit<RegisterState> {
       email: email,
       password: password,
     )
-        .then((value) {
-      print(value.user.email);
-      print(value.user.uid);
-
-      userCreate(
-        email: email,
-        displayName: displayName,
-        phoneNumber: phoneNumber,
-        uid: value.user.uid,
-      );
+        .then((user) {
+      print(user.user.email);
+      print(user.user.uid);
+      CacheHelper.saveData(key: 'uId', value: user.user.uid);
+      saveUser(user, displayName, phoneNumber);
     }).catchError((onError) {
       emit(RegisterErrorState(onError));
     });
   }
 
-  void userCreate({
-    @required String email,
-    @required String displayName,
-    @required String phoneNumber,
-    @required String uid,
-  }) {
+  void saveUser(UserCredential user, String displayName, String phoneNumber) {
     UserModel userModel = UserModel(
       phone: phoneNumber,
       displayName: displayName,
-      email: email,
-      uid: uid,
-      isEmailVerified: false,
+      email: user.user.email,
+      uid: user.user.uid,
+      picture: '',
     );
-    FirebaseFirestore.instance
-        .collection('users')
-        .doc(uid)
-        .set(userModel.toMap())
-        .then((value) {
-      emit(CreateUserSuccessState());
-    }).catchError((onError) {
-      emit(CreateUserErrorState(onError.toString()));
-    });
+    FirestoreUser().addUserToFirestore(userModel: userModel);
+    emit(CreateUserSuccessState());
   }
 
   IconData suffix = Icons.visibility_outlined;
