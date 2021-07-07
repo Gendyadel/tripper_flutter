@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tripper_flutter/blocs/app_cubit/app_cubit.dart';
 import 'package:tripper_flutter/src/themes.dart';
-import 'package:tripper_flutter/views/on_boarding/on_boarding_screen.dart';
 
 class AppRoot extends StatelessWidget {
   // This widget is the root of your application.
@@ -17,9 +16,9 @@ class AppRoot extends StatelessWidget {
         BlocProvider(
           create: (context) => AppCubit()
             ..getUserData()
+            ..getFavouritesData()
             ..getPropertiesData()
-            ..getBannerData()
-            ..getFavouritesData(),
+            ..getBannerData(),
         ),
       ],
       child: BlocConsumer<AppCubit, AppState>(

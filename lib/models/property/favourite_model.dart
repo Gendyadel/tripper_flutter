@@ -4,7 +4,7 @@ class FavourtieModel {
 
   FavourtieModel({
     this.propertyId,
-    this.isFavourite,
+    this.isFavourite = false,
   });
 
   FavourtieModel.fromJson({

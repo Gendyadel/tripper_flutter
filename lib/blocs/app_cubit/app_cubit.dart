@@ -71,10 +71,10 @@ class AppCubit extends Cubit<AppState> {
     });
   }
 
-  Map<String, bool> favorites = {};
-
   List<FavourtieModel> get favouriteModel => _favouriteModel;
   List<FavourtieModel> _favouriteModel = [];
+
+  var favorites = {};
 
   void getFavouritesData() {
     emit(LoadingGetFavoritesState());
@@ -88,6 +88,8 @@ class AppCubit extends Cubit<AppState> {
         // print('Property id:${_favouriteModel[i].propertyId} :${_favouriteModel[i].isFavourite}');
       }
 
+      getFavouritesAsMap();
+
       emit(SuccessGetFavoritesState());
     }).catchError((onError) {
       print(onError.toString());
@@ -95,12 +97,33 @@ class AppCubit extends Cubit<AppState> {
     });
   }
 
+  void getFavouritesAsMap() {
+    print('fav map:  $favorites');
+    print(favouriteModel.length);
+    for (int i = 0; i < _favouriteModel.length; i++) {
+      print(_favouriteModel[i].propertyId);
+      favorites[_favouriteModel[i].propertyId] = _favouriteModel[i].isFavourite;
+    }
+
+    print('fav map:  $favorites');
+  }
+
   void changeFavorites({String propertyID}) {
-    //favorites[propertyID]
+    if (favorites[propertyID] == null) {
+      favorites[propertyID] = false;
+    }
+    //isFav = favorites[propertyID];
+    favorites[propertyID] = !favorites[propertyID];
     emit(ChangeFavoritesState());
+
     _fireStoreService
-        .editFavouritesInFirestore(userId: _currentUser, propertyId: propertyID)
+        .editFavouritesInFirestore(
+            userId: _currentUser,
+            propertyId: propertyID,
+            isFavourite: favorites[propertyID])
         .then((value) {
+      emit(SuccessChangeFavoritesState());
+
       // _favouriteModel.add(FavourtieModel.fromJson(value));
       // print(favouriteModel[0]);
     }).catchError((onError) {
