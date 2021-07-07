@@ -6,6 +6,9 @@ import 'package:tripper_flutter/blocs/app_cubit/app_cubit.dart';
 import 'package:tripper_flutter/components/custom_flat_button.dart';
 import 'package:tripper_flutter/components/custom_text_button.dart';
 import 'package:tripper_flutter/components/toast.dart';
+import 'package:tripper_flutter/src/constants.dart';
+import 'package:tripper_flutter/views/chat/chat_screen.dart';
+import 'package:tripper_flutter/views/search/search_screen.dart';
 
 class UserLayout extends StatelessWidget {
   @override
@@ -28,6 +31,38 @@ class UserLayout extends StatelessWidget {
                 'TRIPPER',
               ),
             ),
+            actions: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: IconButton(
+                  onPressed: () {
+                    navigateTo(
+                      context,
+                      SearchScreen(),
+                    );
+                  },
+                  icon: Icon(
+                    Icons.search,
+                  ),
+                  iconSize: 30,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: IconButton(
+                  onPressed: () {
+                    navigateTo(
+                      context,
+                      ChatScreen(),
+                    );
+                  },
+                  icon: Icon(
+                    Icons.forum_outlined,
+                  ),
+                  iconSize: 30,
+                ),
+              ),
+            ],
           ),
           body: cubit.bottomScreens[cubit.currentIndex],
           bottomNavigationBar: BottomNavigationBar(

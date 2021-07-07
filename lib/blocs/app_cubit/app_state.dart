@@ -26,3 +26,29 @@ class GetPropertiesErrorState extends AppState {
 
   GetPropertiesErrorState(this.error);
 }
+
+class GetBannerErrorState extends AppState {
+  final String error;
+
+  GetBannerErrorState(this.error);
+}
+
+class ChangeFavoritesState extends AppState {}
+
+class SuccessChangeFavoritesState extends AppState {
+  //final ChangeFavoritesModel model;
+
+//  SuccessChangeFavoritesState(this.model);
+}
+
+class ErrorChangeFavoritesState extends AppState {}
+
+class LoadingGetFavoritesState extends AppState {}
+
+class SuccessGetFavoritesState extends AppState {}
+
+class ErrorGetFavoritesState extends AppState {
+  final String error;
+
+  ErrorGetFavoritesState(this.error);
+}

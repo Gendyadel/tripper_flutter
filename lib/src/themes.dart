@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:tripper_flutter/src/styles.dart';
 
 import 'colors.dart';
 
@@ -14,23 +15,26 @@ ThemeData lightTheme = ThemeData(
     ),
     backgroundColor: appbarColor,
     elevation: 0,
-    titleTextStyle: TextStyle(
-      color: Colors.black,
-      fontWeight: FontWeight.bold,
-      fontSize: 30,
-      fontFamily: 'Dynalight',
-    ),
+    titleTextStyle: appBarTitleTextStyle,
     iconTheme: IconThemeData(color: Colors.black),
   ),
   bottomNavigationBarTheme: BottomNavigationBarThemeData(
     type: BottomNavigationBarType.fixed,
     selectedItemColor: defaultColor,
-    elevation: 20,
-    backgroundColor: Colors.white,
+    elevation: 30,
+    selectedLabelStyle: bottomNavSelectedLabelStyle,
+    unselectedLabelStyle: bottomNavUnSelectedLabelStyle,
+    selectedIconTheme: selectedIconTheme,
+    unselectedIconTheme: unSelectedIconTheme,
+    backgroundColor: scaffoldColor,
   ),
   textTheme: TextTheme(
     bodyText1: TextStyle(
       fontSize: 18.0,
+      fontWeight: FontWeight.w600,
+      color: Colors.black,
+    ),
+    headline4: TextStyle(
       fontWeight: FontWeight.w600,
       color: Colors.black,
     ),

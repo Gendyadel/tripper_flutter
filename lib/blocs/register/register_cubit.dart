@@ -46,7 +46,8 @@ class RegisterCubit extends Cubit<RegisterState> {
       displayName: displayName,
       email: user.user.email,
       uid: user.user.uid,
-      picture: '',
+      picture:
+          'https://firebasestorage.googleapis.com/v0/b/tripper03-9a6fd.appspot.com/o/blank-profile-picture.png?alt=media&token=b910a708-a5fe-444b-b544-2997ef4dbf3c',
     );
     FirestoreUser().addUserToFirestore(userModel: userModel);
     emit(CreateUserSuccessState());
