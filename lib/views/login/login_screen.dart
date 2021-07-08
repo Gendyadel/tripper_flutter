@@ -33,6 +33,9 @@ class LoginScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
+                    SizedBox(
+                      height: 10,
+                    ),
                     Text(
                       'Welcome back,',
                       style: Theme.of(context)
@@ -63,6 +66,9 @@ class LoginScreen extends StatelessWidget {
                         borderRadius: BorderRadius.circular(20),
                       ),
                     ),
+                    const SizedBox(
+                      height: 10,
+                    ),
                     SignInButton(
                       text: 'Login with Email',
                       onPressed: () {
@@ -72,7 +78,7 @@ class LoginScreen extends StatelessWidget {
                       textColor: Colors.white,
                     ),
                     const SizedBox(
-                      height: 20,
+                      height: 30,
                     ),
                     SignInButton(
                       text: 'Login with Gmail',
@@ -87,15 +93,15 @@ class LoginScreen extends StatelessWidget {
                     const SizedBox(
                       height: 20,
                     ),
-                    SignInButton(
-                      text: 'Login with Facebook',
-                      assetName: 'assets/images/facebook-logo.png',
-                      onPressed: () {
-                        cubit.signInWithFacebook();
-                      },
-                      backgroundColor: facebookColor2,
-                      textColor: Colors.white,
-                    ),
+                    // SignInButton(
+                    //   text: 'Login with Facebook',
+                    //   assetName: 'assets/images/facebook-logo.png',
+                    //   onPressed: () {
+                    //     cubit.signInWithFacebook();
+                    //   },
+                    //   backgroundColor: facebookColor2,
+                    //   textColor: Colors.white,
+                    // ),
                     SizedBox(
                       height: 30,
                     ),

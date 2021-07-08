@@ -22,7 +22,6 @@ class AppCubit extends Cubit<AppState> {
 
   static AppCubit get(context) => BlocProvider.of(context);
   FireStoreService _fireStoreService = FireStoreService();
-  final _currentUser = FirebaseAuth.instance.currentUser.uid;
 
   int currentIndex = 0;
 
@@ -44,7 +43,6 @@ class AppCubit extends Cubit<AppState> {
     emit(GetUserLoadingState());
 
     FirebaseFirestore.instance.collection('users').doc(uId).get().then((value) {
-      // print(value.data());
       userModel = UserModel.fromJson(value.data());
       emit(GetUserSuccessState());
     }).catchError((onError) {
@@ -70,7 +68,7 @@ class AppCubit extends Cubit<AppState> {
     });
   }
 
-  List<PropertyModel> get favouriteModel => getWishlistFavourites();
+  List<PropertyModel> get favouriteModel => _favouriteModelList;
   List<PropertyModel> _favouriteModelList = [];
   List<FavourtieModel> _favouriteModel = [];
 
@@ -81,7 +79,9 @@ class AppCubit extends Cubit<AppState> {
     emit(LoadingGetFavoritesState());
     print('getFavourites() ضحكتين');
 
-    _fireStoreService.getFavourites(userId: _currentUser).then((favValue) {
+    _fireStoreService
+        .getFavourites(userId: FirebaseAuth.instance.currentUser.uid)
+        .then((favValue) {
       for (int i = 0; i < favValue.length; i++) {
         if (FavourtieModel.fromJson(json: favValue[i].data()).isFavourite) {
           _favouriteModel.add(FavourtieModel.fromJson(
@@ -91,6 +91,10 @@ class AppCubit extends Cubit<AppState> {
       }
 
       _getFavouritesAsMap();
+
+      if (_favouriteModelList.isEmpty) {
+        getWishlistFavourites();
+      }
 
       emit(SuccessGetFavoritesState());
     }).catchError((onError) {
@@ -105,12 +109,12 @@ class AppCubit extends Cubit<AppState> {
     // _favouriteModelList = [];
     print(_favouriteModel.length);
     for (int i = 0; i < _favouriteModel.length; i++) {
-      print(_favouriteModel[i].propertyId);
+      print('as map${_favouriteModel[i].propertyId}');
       favorites[_favouriteModel[i].propertyId] = _favouriteModel[i].isFavourite;
     }
   }
 
-  List<PropertyModel> getWishlistFavourites() {
+  void getWishlistFavourites() {
     for (int i = 0; i < _favouriteModel.length; i++) {
       print(_favouriteModel[i].propertyId);
       favorites[_favouriteModel[i].propertyId] = _favouriteModel[i].isFavourite;
@@ -121,7 +125,6 @@ class AppCubit extends Cubit<AppState> {
         _favouriteModelList.add(PropertyModel.fromJson(value.data()));
       });
     }
-    return _favouriteModelList;
   }
 
   void changeFavorites({String propertyID}) {
@@ -131,14 +134,12 @@ class AppCubit extends Cubit<AppState> {
     if (favorites[propertyID] == true) {
       _favouriteModelList
           .removeWhere((element) => element.propertyId == propertyID);
-      // for(){
-      //   _fireStoreService
-      //       .getSpecificProperty(propertyID: _favouriteModel[i].propertyId)
-      //       .then((value) {
-      //     _favouriteModelList.add(PropertyModel.fromJson(value.data()));
-      //   });
-      // }
-
+    } else {
+      _fireStoreService
+          .getSpecificProperty(propertyID: propertyID)
+          .then((value) {
+        _favouriteModelList.add(PropertyModel.fromJson(value.data()));
+      });
     }
 
     favorites[propertyID] = !favorites[propertyID];
@@ -147,7 +148,7 @@ class AppCubit extends Cubit<AppState> {
 
     _fireStoreService
         .editFavouritesInFirestore(
-            userId: _currentUser,
+            userId: FirebaseAuth.instance.currentUser.uid,
             propertyId: propertyID,
             isFavourite: favorites[propertyID])
         .then((value) {

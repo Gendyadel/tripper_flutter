@@ -2,7 +2,6 @@ import 'package:bloc/bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:meta/meta.dart';
 import 'package:tripper_flutter/models/auth/user_model.dart';
@@ -17,8 +16,6 @@ class LoginCubit extends Cubit<LoginState> {
   static LoginCubit get(context) => BlocProvider.of(context);
 
   final _firebaseAuth = FirebaseAuth.instance;
-
-  final FacebookLogin _facebookLogin = FacebookLogin();
 
   User get currentUser => _firebaseAuth.currentUser;
 
@@ -71,16 +68,6 @@ class LoginCubit extends Cubit<LoginState> {
           message: 'Missing Google ID Token',
         );
       }
-    }
-  }
-
-  void signInWithFacebook() async {
-    FacebookLoginResult result = await _facebookLogin.logIn(['email']);
-
-    if (result.status == FacebookLoginStatus.loggedIn) {
-      final accessToken = result.accessToken.token;
-      final facebookCredential = FacebookAuthProvider.credential(accessToken);
-      var user = await _firebaseAuth.signInWithCredential(facebookCredential);
     }
   }
 
