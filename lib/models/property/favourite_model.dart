@@ -14,7 +14,6 @@ class FavourtieModel {
     if (json == null) {
       return;
     }
-//TODO edit 'productID' to propertyId
 
     propertyId = propertyID;
     isFavourite = json['isFavourite'];

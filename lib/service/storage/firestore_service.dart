@@ -17,6 +17,14 @@ class FireStoreService {
     return value.docs;
   }
 
+  Future<DocumentSnapshot<Object>> getSpecificProperty({
+    String propertyID,
+  }) async {
+    //_propertyCollectionReference.doc(propertyID).get();
+    var value = await _db.doc('products/$propertyID').get();
+    return value;
+  }
+
   Future<List<QueryDocumentSnapshot>> getFavourites(
       {@required String userId}) async {
     var value = await _db.collection('users/$userId/favourites').get();

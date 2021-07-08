@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tripper_flutter/blocs/login/login_cubit.dart';
 import 'package:tripper_flutter/components/custom_text_button.dart';
 import 'package:tripper_flutter/components/sign_in_button.dart';
+import 'package:tripper_flutter/components/toast.dart';
 import 'package:tripper_flutter/layout/user_layout.dart';
 import 'package:tripper_flutter/src/colors.dart';
 import 'package:tripper_flutter/src/constants.dart';
@@ -17,6 +18,8 @@ class LoginScreen extends StatelessWidget {
       child: BlocConsumer<LoginCubit, LoginState>(
         listener: (context, state) {
           if (state is GoogleLoginSuccessState) {
+            showToaster(
+                message: 'Logged in Successfully', state: ToastStates.SUCCESS);
             navigateAndReplace(context, UserLayout());
           }
         },

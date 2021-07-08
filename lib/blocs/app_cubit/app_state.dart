@@ -33,7 +33,7 @@ class GetBannerErrorState extends AppState {
   GetBannerErrorState(this.error);
 }
 
-class ChangeFavoritesState extends AppState {}
+class LoadingChangeFavoritesState extends AppState {}
 
 class SuccessChangeFavoritesState extends AppState {
   //final ChangeFavoritesModel model;
